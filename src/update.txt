@@ -1,0 +1,73 @@
+version: '3.7'
+
+services:
+
+  master:
+    image: mysql:8.0
+    container_name: MASTER
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: allenJDK
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3306:3306"
+    volumes:
+      - masterVol:/var/lib/mysql
+    command: "--server-id=1 --log-bin=mysql-bin --binlog-format=row --default-authentication-plugin=mysql_native_password --max_binlog_size=100M --expire_logs_days=7 --log-slave-updates=ON --gtid-mode=ON --enforce-gtid-consistency=ON"
+    networks:
+      - prod_network
+
+  curitiba:
+    image: mysql:8.0
+    container_name: CURITIBA
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: allenJDK
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3307:3306"
+    volumes:
+      - curitibaVol:/var/lib/mysql
+    command: "--server-id=2 --log-bin=mysql-bin --binlog-format=row --default-authentication-plugin=mysql_native_password --max_binlog_size=100M --expire_logs_days=7 --log-slave-updates=ON --gtid-mode=ON --enforce-gtid-consistency=ON"
+    networks:
+      - prod_network
+
+  amapa:
+    image: mysql:8.0
+    container_name: AMAPA
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: allenJDK
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3309:3306"
+    volumes:
+      - amapaVol:/var/lib/mysql
+    command: "--server-id=4 --log-bin=mysql-bin --binlog-format=row --default-authentication-plugin=mysql_native_password --max_binlog_size=100M --expire_logs_days=7 --log-slave-updates=ON --gtid-mode=ON --enforce-gtid-consistency=ON"
+    networks:
+      - prod_network
+
+  bahia:
+    image: mysql:8.0
+    container_name: BAHIA
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: allenJDK
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3310:3306"
+    volumes:
+      - bahiaVol:/var/lib/mysql
+    command: "--server-id=5 --log-bin=mysql-bin --binlog-format=row --default-authentication-plugin=mysql_native_password --max_binlog_size=100M --expire_logs_days=7 --log-slave-updates=ON --gtid-mode=ON --enforce-gtid-consistency=ON"
+    networks:
+      - prod_network
+
+
+networks:
+  prod_network:
+
+volumes:
+  masterVol:
+  curitibaVol:
+  bahiaVol:
+  amapaVol:
